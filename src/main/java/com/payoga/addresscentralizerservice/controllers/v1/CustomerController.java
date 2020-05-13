@@ -21,7 +21,17 @@ public class CustomerController {
     public Map<String, Object> getCustomerInfo(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "customer info has been fetched");
-        response.put("data", customerService.getCustomerById(id));
+        response.put("data", customerService.getCustomerInfoDtoWithAddressesById(id));
+
+        return response;
+    }
+
+    @GetMapping({"/{id}/active"})
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, Object> getCustomerInfoWithActiveAddress(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "customer info with an active address has been fetched");
+        response.put("data", customerService.getCustomerInfoDtoWithActiveAddressById(id));
 
         return response;
     }

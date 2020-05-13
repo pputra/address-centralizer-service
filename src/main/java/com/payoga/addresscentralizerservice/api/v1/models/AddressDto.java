@@ -15,4 +15,6 @@ public class AddressDto {
     private String country;
 
     private int zip;
+
+    private boolean active;
 }

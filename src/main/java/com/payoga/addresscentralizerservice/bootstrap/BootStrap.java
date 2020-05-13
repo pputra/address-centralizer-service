@@ -32,6 +32,7 @@ public class BootStrap implements CommandLineRunner {
         address1.setState("CA");
         address1.setCountry("USA");
         address1.setZip(90265);
+        address1.setActive(true);
         address1.setCustomer(customer1);
         addressRepository.save(address1);
         Address address2 = new Address();

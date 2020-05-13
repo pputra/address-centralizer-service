@@ -4,6 +4,7 @@ import com.payoga.addresscentralizerservice.api.v1.mappers.AddressMapper;
 import com.payoga.addresscentralizerservice.api.v1.mappers.CustomerMapper;
 import com.payoga.addresscentralizerservice.api.v1.models.AddressDto;
 import com.payoga.addresscentralizerservice.api.v1.models.CustomerDto;
+import com.payoga.addresscentralizerservice.domains.Address;
 import com.payoga.addresscentralizerservice.domains.Customer;
 import com.payoga.addresscentralizerservice.repositories.CustomerRepository;
 import com.payoga.addresscentralizerservice.services.interfaces.CustomerService;
@@ -21,19 +22,43 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerMapper customerMapper;
     private final AddressMapper addressMapper;
 
-    public CustomerDto getCustomerById(Long id) {
+    @Override
+    public Customer getCustomerById(Long id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
 
         if (!customerOptional.isPresent()) {
-            // TODO: handle exception
+            // TODO: throw an exception
         }
 
-        Customer customer = customerOptional.get();
+        return customerOptional.get();
+    }
+
+    @Override
+    public CustomerDto getCustomerInfoDtoWithAddressesById(Long id) {
+        Customer customer = getCustomerById(id);
         CustomerDto customerDto = customerMapper.customerToCustomerDto(customer);
         List<AddressDto> addressDtoList = new ArrayList<>();
         customer.getAddresses()
                 .forEach((address)->addressDtoList
                 .add(addressMapper.addressToAddressDto(address)));
+        customerDto.setAddresses(addressDtoList);
+
+        return customerDto;
+    }
+
+    @Override
+    public CustomerDto getCustomerInfoDtoWithActiveAddressById(Long id) {
+        Customer customer = getCustomerById(id);
+        CustomerDto customerDto = customerMapper.customerToCustomerDto(customer);
+        List<AddressDto> addressDtoList = new ArrayList<>();
+
+        for (Address address : customer.getAddresses()) {
+            if (address.isActive()) {
+                addressDtoList.add(addressMapper.addressToAddressDto(address));
+                break;
+            }
+        }
+
         customerDto.setAddresses(addressDtoList);
 
         return customerDto;
