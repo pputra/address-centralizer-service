@@ -2,6 +2,8 @@ package com.payoga.addresscentralizerservice.api.v1.models;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CustomerDto {
     private Long uid;
@@ -12,5 +14,5 @@ public class CustomerDto {
 
     private String email;
 
-    private AddressListDto addressListDTO;
+    private List<AddressDto> addresses;
 }
