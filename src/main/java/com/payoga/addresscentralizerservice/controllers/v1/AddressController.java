@@ -1,6 +1,7 @@
 package com.payoga.addresscentralizerservice.controllers.v1;
 
 import com.payoga.addresscentralizerservice.api.v1.models.AddressDto;
+import com.payoga.addresscentralizerservice.api.v1.models.CreateAddressRequest;
 import com.payoga.addresscentralizerservice.api.v1.models.SetActiveAddressRequest;
 import com.payoga.addresscentralizerservice.services.interfaces.AddressService;
 import lombok.AllArgsConstructor;
@@ -18,9 +19,21 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, Object> addAddress(CreateAddressRequest createAddressRequest) {
+        AddressDto address = addressService.createAddress(createAddressRequest);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "new address has been added");
+        response.put("data", address);
+
+        return response;
+    }
+
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, Object> setActiveAddress(@RequestBody SetActiveAddressRequest setActiveAddressRequest) {
+    public Map<String, Object> setActiveAddress(SetActiveAddressRequest setActiveAddressRequest) {
         AddressDto addressDto = addressService.setActiveAddress(setActiveAddressRequest);
 
         Map<String, Object> response = new HashMap<>();
