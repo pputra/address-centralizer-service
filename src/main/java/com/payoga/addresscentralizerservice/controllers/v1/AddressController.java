@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(AddressController.BASE_URL)
 @AllArgsConstructor
 public class AddressController {

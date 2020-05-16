@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(CustomerController.BASE_URL)
 @AllArgsConstructor
 public class CustomerController {

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/v1")
 @ResponseStatus(HttpStatus.OK)
 public class MainController {
